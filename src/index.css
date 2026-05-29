@@ -98,12 +98,7 @@ button {
   border-left-color: #6e6a58;
   border-right-color: #0a0a08;
   border-bottom-color: #0a0a08;
-  clip-path: polygon(
-    3px 0%, calc(100% - 3px) 0%,
-    100% 3px, 100% calc(100% - 3px),
-    calc(100% - 3px) 100%, 3px 100%,
-    0% calc(100% - 3px), 0% 3px
-  );
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
