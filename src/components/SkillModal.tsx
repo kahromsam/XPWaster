@@ -26,9 +26,23 @@ function minutesToPos(min: number): number {
 
 export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
   const skill = SKILLS.find(s => s.id === skillId)!;
-  const [sliderPos, setSliderPos] = useState(() => minutesToPos(60));
-  const minutes = posToMinutes(sliderPos);
+  const [minutes, setMinutes] = useState(60);
+  const [hoursInput, setHoursInput] = useState('1');
+
+  const sliderPos = minutesToPos(minutes);
   const sliderPercent = (sliderPos / STEPS) * 100;
+
+  const handleSlider = (pos: number) => {
+    const m = posToMinutes(pos);
+    setMinutes(m);
+    setHoursInput((m / 60 % 1 === 0) ? String(m / 60) : (m / 60).toFixed(2));
+  };
+
+  const handleHoursInput = (val: string) => {
+    setHoursInput(val);
+    const h = parseFloat(val.replace(',', '.'));
+    if (!isNaN(h) && h > 0) setMinutes(Math.round(h * 60));
+  };
 
   const handleLog = useCallback(() => {
     onLog(skillId, minutes);
@@ -73,7 +87,7 @@ export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
             max={STEPS}
             step={1}
             value={sliderPos}
-            onChange={e => setSliderPos(Number(e.target.value))}
+            onChange={e => handleSlider(Number(e.target.value))}
             style={{
               '--slider-color': skill.color,
               background: `linear-gradient(to right, ${skill.color} ${sliderPercent}%, #1a1208 ${sliderPercent}%)`,
@@ -89,6 +103,18 @@ export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
 
           <div className="xp-preview" style={{ color: skill.color }}>
             +{formatMinutes(minutes)}
+          </div>
+
+          <div className="hours-input-row">
+            <label className="hours-input-label">Syötä tunteja:</label>
+            <input
+              type="number"
+              className="hours-input"
+              value={hoursInput}
+              min={0.1}
+              step={0.5}
+              onChange={e => handleHoursInput(e.target.value)}
+            />
           </div>
         </div>
 

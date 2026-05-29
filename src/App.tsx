@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { SKILLS } from './data/skills';
 import { useSkills } from './hooks/useSkills';
 import { SkillCard } from './components/SkillCard';
 import { SkillModal } from './components/SkillModal';
@@ -29,12 +28,6 @@ export default function App() {
           />
         ))}
       </main>
-
-      <footer className="total-level-bar">
-        Total level:&nbsp;
-        <span className="total-level-num">{totalLevel}</span>
-        <span className="total-level-max"> / {SKILLS.length * 99}</span>
-      </footer>
 
       {selectedSkill && (
         <SkillModal

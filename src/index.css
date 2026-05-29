@@ -356,6 +356,42 @@ button {
   cursor: pointer;
 }
 
+.hours-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.hours-input-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #9e8c5a;
+  white-space: nowrap;
+}
+
+.hours-input {
+  flex: 1;
+  background: #282215;
+  border-width: 1px;
+  border-style: solid;
+  border-top-color: #0a0804;
+  border-left-color: #0a0804;
+  border-right-color: #6a5830;
+  border-bottom-color: #6a5830;
+  border-radius: 2px;
+  color: #ffff00;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  padding: 8px 10px;
+  outline: none;
+  width: 100%;
+  -moz-appearance: textfield;
+}
+
+.hours-input::-webkit-inner-spin-button,
+.hours-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
 .slider-labels {
   display: flex;
   justify-content: space-between;
