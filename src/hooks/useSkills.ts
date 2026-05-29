@@ -49,6 +49,12 @@ export function useSkills() {
 
   const clearLevelUpEvent = useCallback(() => setLevelUpEvent(null), []);
 
+  const resetAll = useCallback(() => {
+    const empty: Record<string, number> = {};
+    for (const skill of SKILLS) empty[skill.id] = 0;
+    setMinuteMap(empty);
+  }, []);
+
   const skills: SkillData[] = SKILLS.map(skill => ({
     id: skill.id,
     minutes: minuteMap[skill.id] ?? 0,
@@ -57,5 +63,5 @@ export function useSkills() {
 
   const totalLevel = skills.reduce((sum, s) => sum + s.level, 0);
 
-  return { skills, totalLevel, addMinutes, levelUpEvent, clearLevelUpEvent };
+  return { skills, totalLevel, addMinutes, levelUpEvent, clearLevelUpEvent, resetAll };
 }

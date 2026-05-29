@@ -6,13 +6,18 @@ import { SkillModal } from './components/SkillModal';
 import { LevelUpToast } from './components/LevelUpToast';
 
 export default function App() {
-  const { skills, totalLevel, addMinutes, levelUpEvent, clearLevelUpEvent } = useSkills();
+  const { skills, totalLevel, addMinutes, levelUpEvent, clearLevelUpEvent, resetAll } = useSkills();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
   return (
     <div className="app">
       <header className="header">
         <h1 className="app-title">XP WASTER</h1>
+        <button
+          className="reset-btn"
+          onClick={() => { if (window.confirm('Nollataanko kaikki edistyminen?')) resetAll(); }}
+          aria-label="Reset"
+        >↺</button>
       </header>
 
       <main className="skill-grid">

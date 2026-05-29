@@ -1,4 +1,4 @@
-const KEY = 'xpwaste_v4'; // v4: exponential doubling formula
+const KEY = 'xpwaste_v7'; // v6: doubles every 7 levels, 10 000h to level 99
 
 export interface StoredState {
   skills: Record<string, number>; // skillId → total minutes

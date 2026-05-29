@@ -1,14 +1,18 @@
-// Minute thresholds per level: level k→(k+1) requires 60×2^(k-1) minutes
-// MINUTES_TABLE[i] = total minutes to reach level (i+1)
-// MINUTES_TABLE[0] = 0    (level 1)
-// MINUTES_TABLE[1] = 60   (level 2, after 1h)
-// MINUTES_TABLE[2] = 180  (level 3, after 1+2=3h)
-// MINUTES_TABLE[3] = 420  (level 4, after 1+2+4=7h)
-// Formula: 60 × (2^i − 1)
+// Level 1→2 = 1h, doubles every ~10 levels, level 99 total = 10 000h
+// R solved numerically: sum(R^j, j=0..97) = 10 000
+
+const R = (() => {
+  let lo = 1.001, hi = 1.5;
+  for (let i = 0; i < 200; i++) {
+    const mid = (lo + hi) / 2;
+    if ((Math.pow(mid, 98) - 1) / (mid - 1) < 10_000) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+})();
 
 const MINUTES_TABLE: readonly number[] = Array.from(
   { length: 99 },
-  (_, i) => 60 * (Math.pow(2, i) - 1),
+  (_, i) => i === 0 ? 0 : Math.round(60 * (Math.pow(R, i) - 1) / (R - 1)),
 );
 
 export function getLevelFromMinutes(minutes: number): number {
@@ -38,7 +42,12 @@ export function minuteProgress(
 
 export function formatMinutes(min: number): string {
   if (min < 60) return `${min} min`;
-  const h = Math.floor(min / 60);
-  const m = min % 60;
-  return m === 0 ? `${h}h` : `${h}h ${m}min`;
+  if (min < 1440) {
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    return m === 0 ? `${h}h` : `${h}h ${m}min`;
+  }
+  const d = Math.floor(min / 1440);
+  const h = Math.floor((min % 1440) / 60);
+  return h === 0 ? `${d} pv` : `${d} pv ${h}h`;
 }

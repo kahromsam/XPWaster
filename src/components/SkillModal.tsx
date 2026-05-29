@@ -8,11 +8,27 @@ interface SkillModalProps {
   onLog: (skillId: string, minutes: number) => void;
 }
 
+const STEPS = 1000;
+const LOG_MIN = Math.log(1);
+const LOG_MAX = Math.log(1440);
+
+function posToMinutes(pos: number): number {
+  const raw = Math.exp(LOG_MIN + (pos / STEPS) * (LOG_MAX - LOG_MIN));
+  if (raw < 10)  return Math.round(raw);
+  if (raw < 60)  return Math.round(raw / 5) * 5;
+  if (raw < 240) return Math.round(raw / 15) * 15;
+  return Math.round(raw / 30) * 30;
+}
+
+function minutesToPos(min: number): number {
+  return Math.round(((Math.log(min) - LOG_MIN) / (LOG_MAX - LOG_MIN)) * STEPS);
+}
+
 export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
   const skill = SKILLS.find(s => s.id === skillId)!;
-  const [minutes, setMinutes] = useState(45);
-
-  const sliderPercent = ((minutes - 5) / (180 - 5)) * 100;
+  const [sliderPos, setSliderPos] = useState(() => minutesToPos(60));
+  const minutes = posToMinutes(sliderPos);
+  const sliderPercent = (sliderPos / STEPS) * 100;
 
   const handleLog = useCallback(() => {
     onLog(skillId, minutes);
@@ -53,11 +69,11 @@ export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
           <input
             type="range"
             className="time-slider"
-            min={5}
-            max={180}
-            step={5}
-            value={minutes}
-            onChange={e => setMinutes(Number(e.target.value))}
+            min={0}
+            max={STEPS}
+            step={1}
+            value={sliderPos}
+            onChange={e => setSliderPos(Number(e.target.value))}
             style={{
               '--slider-color': skill.color,
               background: `linear-gradient(to right, ${skill.color} ${sliderPercent}%, #1a1208 ${sliderPercent}%)`,
@@ -66,13 +82,13 @@ export function SkillModal({ skillId, onClose, onLog }: SkillModalProps) {
           />
 
           <div className="slider-labels">
-            <span>5 min</span>
-            <span>1h 30min</span>
-            <span>3h</span>
+            <span>1 min</span>
+            <span>2h 30min</span>
+            <span>24h</span>
           </div>
 
           <div className="xp-preview" style={{ color: skill.color }}>
-            +{minutes} min
+            +{formatMinutes(minutes)}
           </div>
         </div>
 
