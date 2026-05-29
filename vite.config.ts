@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/XPWaster/',
   plugins: [
     react(),
     VitePWA({
@@ -11,14 +12,14 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
       },
       manifest: {
-        name: 'XPWaste',
-        short_name: 'XPWaste',
+        name: 'XP Waster',
+        short_name: 'XP Waster',
         description: 'OSRS-tyylinen skill tracker',
         theme_color: '#0d0d1a',
         background_color: '#0d0d1a',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
+        start_url: '/XPWaster/',
         icons: [
           {
             src: '/pwa-192x192.png',
