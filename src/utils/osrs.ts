@@ -1,13 +1,14 @@
-// Minute thresholds per level: level k→(k+1) requires k×60 minutes
+// Minute thresholds per level: level k→(k+1) requires 60×2^(k-1) minutes
 // MINUTES_TABLE[i] = total minutes to reach level (i+1)
-// MINUTES_TABLE[0]  = 0   (level 1)
-// MINUTES_TABLE[1]  = 60  (level 2, after 1h)
-// MINUTES_TABLE[98] = 291 060 (level 99, after 4851h)
-// Formula: 30 × level × (level−1)
+// MINUTES_TABLE[0] = 0    (level 1)
+// MINUTES_TABLE[1] = 60   (level 2, after 1h)
+// MINUTES_TABLE[2] = 180  (level 3, after 1+2=3h)
+// MINUTES_TABLE[3] = 420  (level 4, after 1+2+4=7h)
+// Formula: 60 × (2^i − 1)
 
 const MINUTES_TABLE: readonly number[] = Array.from(
   { length: 99 },
-  (_, i) => 30 * (i + 1) * i,
+  (_, i) => 60 * (Math.pow(2, i) - 1),
 );
 
 export function getLevelFromMinutes(minutes: number): number {

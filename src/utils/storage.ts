@@ -1,4 +1,4 @@
-const KEY = 'xpwaste_v3'; // v3: clean start, minutes-only formula
+const KEY = 'xpwaste_v4'; // v4: exponential doubling formula
 
 export interface StoredState {
   skills: Record<string, number>; // skillId → total minutes
