@@ -33,7 +33,7 @@ export function SkillCard({ skillData, onClick }: SkillCardProps) {
             {skillData.level}<span className="skill-level-slash">/</span><span className="skill-level-max">99</span>
           </span>
           {skillData.level < 99 && (
-            <span className="skill-time-left">→ {formatMinutes(remaining)}</span>
+            <span className="skill-time-left">{formatMinutes(remaining)}</span>
           )}
         </div>
       </div>

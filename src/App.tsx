@@ -31,17 +31,6 @@ export default function App() {
         >↺</button>
       </header>
 
-      {nearest && nearestSkill && (
-        <div className="nearest-bar" style={{ borderBottomColor: nearestSkill.color }}>
-          <span className="nearest-label">lähimpänä</span>
-          <span className="nearest-skill" style={{ color: nearestSkill.color }}>{nearestSkill.name}</span>
-          <span className="nearest-time">
-            <span className="nearest-time-val">{formatMinutes(nearest.remaining)}</span>
-            {' → '}lv {nearest.skillData.level + 1}
-          </span>
-        </div>
-      )}
-
       <main className="skill-grid">
         {skills.map(skillData => (
           <SkillCard
