@@ -15,4 +15,5 @@ export const SKILLS: Skill[] = [
   { id: 'lukeminen',  name: 'Lukeminen',  icon: '📚', iconImg: `${b}icons/reading.png`,    color: '#c8a860' },
   { id: 'kokkaus',    name: 'Kokkaus',    icon: '🍳', iconImg: `${b}icons/cooking.png`,    color: '#ff7043' },
   { id: 'musiikki',   name: 'Musiikki',   icon: '🎹', iconImg: `${b}icons/music.png`,      color: '#9c8adc' },
+  { id: 'friba',      name: 'Friba',      icon: '🥏', iconImg: `${b}icons/frisbee.png`,    color: '#4488ff' },
 ];
