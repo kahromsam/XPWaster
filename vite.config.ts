@@ -22,19 +22,14 @@ export default defineConfig(({ command }) => ({
         start_url: '/XPWaster/',
         icons: [
           {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: 'xpwastericon.jpg',
+            sizes: '1024x1024',
+            type: 'image/jpeg',
           },
           {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: 'xpwastericon.jpg',
+            sizes: '1024x1024',
+            type: 'image/jpeg',
             purpose: 'any maskable',
           },
         ],
