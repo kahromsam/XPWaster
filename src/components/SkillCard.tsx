@@ -1,6 +1,6 @@
 import React from 'react';
 import { SKILLS } from '../data/skills';
-import { minuteProgress } from '../utils/osrs';
+import { minuteProgress, formatMinutes } from '../utils/osrs';
 import type { SkillData } from '../hooks/useSkills';
 
 interface SkillCardProps {
@@ -10,7 +10,8 @@ interface SkillCardProps {
 
 export function SkillCard({ skillData, onClick }: SkillCardProps) {
   const skill = SKILLS.find(s => s.id === skillData.id)!;
-  const { percent } = minuteProgress(skillData.minutes, skillData.level);
+  const { percent, current, needed } = minuteProgress(skillData.minutes, skillData.level);
+  const remaining = needed - current;
   const barColor = `hsl(${percent * 1.2}, 90%, 42%)`;
 
   return (
@@ -31,6 +32,9 @@ export function SkillCard({ skillData, onClick }: SkillCardProps) {
           <span className="skill-level-num">
             {skillData.level}<span className="skill-level-slash">/</span><span className="skill-level-max">99</span>
           </span>
+          {skillData.level < 99 && (
+            <span className="skill-time-left">→ {formatMinutes(remaining)}</span>
+          )}
         </div>
       </div>
       <div className="skill-xp-strip">

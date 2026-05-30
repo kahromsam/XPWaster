@@ -41,6 +41,42 @@ button {
   margin: 0 auto;
 }
 
+/* ── Nearest level bar ───────────────────────── */
+.nearest-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #282215;
+  border-bottom: 2px solid #0a0804;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.nearest-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #6e6a58;
+  text-transform: uppercase;
+}
+
+.nearest-skill {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+.nearest-time {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #c8b07a;
+  margin-left: auto;
+}
+
+.nearest-time-val {
+  color: #ffff00;
+}
+
 /* ── Header ───────────────────────────────────── */
 .header {
   display: flex;
@@ -183,6 +219,15 @@ button {
 .skill-level-max {
   color: #ffff00;
   font-size: 0.85em;
+}
+
+.skill-time-left {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #9e8c5a;
+  margin-top: 4px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Thin XP progress strip at very bottom */

@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { SKILLS } from './data/skills';
 import { useSkills } from './hooks/useSkills';
+import { minuteProgress, formatMinutes } from './utils/osrs';
 import { SkillCard } from './components/SkillCard';
 import { SkillModal } from './components/SkillModal';
 import { LevelUpToast } from './components/LevelUpToast';
@@ -7,6 +9,16 @@ import { LevelUpToast } from './components/LevelUpToast';
 export default function App() {
   const { skills, totalLevel, addMinutes, levelUpEvent, clearLevelUpEvent, resetAll } = useSkills();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+
+  const nearest = skills
+    .filter(s => s.level < 99)
+    .map(s => {
+      const { current, needed } = minuteProgress(s.minutes, s.level);
+      return { skillData: s, remaining: needed - current };
+    })
+    .sort((a, b) => a.remaining - b.remaining)[0];
+
+  const nearestSkill = nearest ? SKILLS.find(s => s.id === nearest.skillData.id) : null;
 
   return (
     <div className="app">
@@ -18,6 +30,17 @@ export default function App() {
           aria-label="Reset"
         >↺</button>
       </header>
+
+      {nearest && nearestSkill && (
+        <div className="nearest-bar" style={{ borderBottomColor: nearestSkill.color }}>
+          <span className="nearest-label">lähimpänä</span>
+          <span className="nearest-skill" style={{ color: nearestSkill.color }}>{nearestSkill.name}</span>
+          <span className="nearest-time">
+            <span className="nearest-time-val">{formatMinutes(nearest.remaining)}</span>
+            {' → '}lv {nearest.skillData.level + 1}
+          </span>
+        </div>
+      )}
 
       <main className="skill-grid">
         {skills.map(skillData => (
