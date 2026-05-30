@@ -45,12 +45,7 @@ export function minuteProgress(
 
 export function formatMinutes(min: number): string {
   if (min < 60) return `${min} min`;
-  if (min < 1440) {
-    const h = Math.floor(min / 60);
-    const m = min % 60;
-    return m === 0 ? `${h}h` : `${h}h ${m}min`;
-  }
-  const d = Math.floor(min / 1440);
-  const h = Math.floor((min % 1440) / 60);
-  return h === 0 ? `${d} pv` : `${d} pv ${h}h`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m === 0 ? `${h}h` : `${h}h ${m}min`;
 }
