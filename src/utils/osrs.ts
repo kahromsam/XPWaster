@@ -1,18 +1,21 @@
-// Level 1→2 = 1h, doubles every ~10 levels, level 99 total = 10 000h
-// R solved numerically: sum(R^j, j=0..97) = 10 000
+// Exact OSRS XP formula scaled so level 99 = 10 000h total
+// XP(L) = floor(sum_{k=1}^{L-1} floor(k + 300 * 2^(k/7)) / 4)
+// Source: https://oldschool.runescape.wiki/w/Experience
 
-const R = (() => {
-  let lo = 1.001, hi = 1.5;
-  for (let i = 0; i < 200; i++) {
-    const mid = (lo + hi) / 2;
-    if ((Math.pow(mid, 98) - 1) / (mid - 1) < 10_000) lo = mid; else hi = mid;
+function osrsXP(level: number): number {
+  if (level <= 1) return 0;
+  let sum = 0;
+  for (let k = 1; k < level; k++) {
+    sum += Math.floor(k + 300 * Math.pow(2, k / 7));
   }
-  return (lo + hi) / 2;
-})();
+  return Math.floor(sum / 4);
+}
+
+const SCALE = 600_000 / osrsXP(99); // scale so level 99 = 10 000h = 600 000min
 
 const MINUTES_TABLE: readonly number[] = Array.from(
   { length: 99 },
-  (_, i) => i === 0 ? 0 : Math.round(60 * (Math.pow(R, i) - 1) / (R - 1)),
+  (_, i) => Math.round(osrsXP(i + 1) * SCALE),
 );
 
 export function getLevelFromMinutes(minutes: number): number {

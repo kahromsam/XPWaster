@@ -1,4 +1,4 @@
-const KEY = 'xpwaste_v7'; // v6: doubles every 7 levels, 10 000h to level 99
+const KEY = 'xpwaste_v8'; // v8: exact OSRS XP formula scaled to 10 000h at level 99 // v6: doubles every 7 levels, 10 000h to level 99
 
 export interface StoredState {
   skills: Record<string, number>; // skillId → total minutes
